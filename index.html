@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Facilito Bolivia | Catálogo 2025</title>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0f172a">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Outfit', sans-serif; background-color: #0f172a; color: #e2e8f0; -webkit-tap-highlight-color: transparent; }
+        .glass { background: rgba(30, 41, 59, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .gradient-text { background: linear-gradient(135deg, #22d3ee 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .fade-enter { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState } = React;
+        const services = [
+            { id: 1, cat: 'uni', title: "Tesis Completa", price: "3000 Bs", icon: "fa-book", desc: "Redacción integral, original y garantizada." },
+            { id: 2, cat: 'uni', title: "Asesoría Premium", price: "2000 Bs", icon: "fa-user-graduate", desc: "Guía metodológica paso a paso hasta la defensa." },
+            { id: 3, cat: 'uni', title: "Tesinas", price: "1500 Bs", icon: "fa-laptop-code", desc: "Para titulación técnica superior." },
+            { id: 4, cat: 'uni', title: "Monografías", price: "1000 Bs", icon: "fa-pencil-alt", desc: "Investigación bibliográfica para posgrados." },
+            { id: 5, cat: 'uni', title: "Artículos Científicos", price: "1800 Bs", icon: "fa-newspaper", desc: "Papers para revistas indexadas." },
+            { id: 6, cat: 'esfm', title: "Sistematización", price: "2500 Bs", icon: "fa-chalkboard-teacher", desc: "Experiencias para egreso ESFM/PPM." },
+            { id: 7, cat: 'esfm', title: "Ingreso ESFM", price: "300 Bs", icon: "fa-university", desc: "Curso preparatorio intensivo." },
+            { id: 8, cat: 'esfm', title: "Pack PDCs", price: "150 Bs", icon: "fa-clipboard-list", desc: "Planes de Aula listos y adaptables." },
+            { id: 9, cat: 'esfm', title: "Compendio Normativo", price: "200 Bs", icon: "fa-balance-scale", desc: "Leyes y reglamentos educativos." },
+            { id: 10, cat: 'exp', title: "Estadística SPSS", price: "500 Bs", icon: "fa-chart-pie", desc: "Procesamiento de datos cuantitativos." },
+            { id: 11, cat: 'exp', title: "Turnitin (Plagio)", price: "80 Bs", icon: "fa-search", desc: "Informe de similitud detallado." },
+            { id: 12, cat: 'exp', title: "Defensa Oral", price: "250 Bs", icon: "fa-microphone-alt", desc: "Simulacro y diapositivas de impacto." },
+            { id: 13, cat: 'exp', title: "Urgencias 24h", price: "+100 Bs", icon: "fa-bolt", desc: "Atención prioritaria inmediata." },
+            { id: 14, cat: 'exp', title: "Formato APA 7", price: "150 Bs", icon: "fa-paragraph", desc: "Corrección de citas y referencias." }
+        ];
+        const advisors = [
+            { name: "Jaci Velásquez", phone: "78804177", role: "Ventas" },
+            { name: "Edgar Quisbert", phone: "62435393", role: "Ventas" }
+        ];
+        const App = () => {
+            const [filter, setFilter] = useState('all');
+            const [selected, setSelected] = useState(null);
+            const [form, setForm] = useState({ name: '', city: '' });
+            const filteredServices = filter === 'all' ? services : services.filter(s => s.cat === filter);
+            const sendWA = (phone) => {
+                const serviceName = selected ? selected.title : "Información General";
+                const msg = `Hola, solicito *Precontrato Digital*:%0A%0A👤 *Nombre:* ${form.name}%0A📍 *Ciudad/U:* ${form.u}%0A📦 *Interés:* ${serviceName}`;
+                window.open(`https://wa.me/591${phone}?text=${msg}`, '_blank');
+            };
+            return (
+                <div className="min-h-screen pb-24 relative overflow-hidden">
+                    <div className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none">
+                        <div className="absolute top-[-10%] right-[-10%] w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl"></div>
+                        <div className="absolute bottom-[-10%] left-[-10%] w-80 h-80 bg-blue-600/20 rounded-full blur-3xl"></div>
+                    </div>
+                    <div className="fixed top-0 w-full glass z-50 px-4 py-4 flex justify-between items-center shadow-lg shadow-cyan-500/5">
+                        <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 bg-cyan-600 rounded-lg flex items-center justify-center text-white font-bold text-sm shadow">FB</div>
+                            <div className="font-bold text-lg tracking-tight leading-none">Facilito<span className="text-cyan-400">Bolivia</span></div>
+                        </div>
+                        <div className="text-[10px] uppercase font-bold tracking-widest text-slate-400">Filial Digital Next</div>
+                    </div>
+                    <div className="pt-28 pb-6 px-4 text-center">
+                        <h1 className="text-4xl font-extrabold mb-2">Catálogo <span className="gradient-text">2025</span></h1>
+                        <p className="text-slate-400 text-sm max-w-xs mx-auto">Soluciones académicas para Universitarios y Maestros.</p>
+                    </div>
+                    <div className="px-4 mb-6 sticky top-20 z-40 bg-[#0f172a]/90 py-2 backdrop-blur-sm">
+                        <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2">
+                            {[
+                                {id: 'all', label: 'Todo'},
+                                {id: 'uni', label: '🎓 Universitario'},
+                                {id: 'esfm', label: '🍎 ESFM/Profe'},
+                                {id: 'exp', label: '⚡ Rápido'}
+                            ].map(tab => (
+                                <button key={tab.id} onClick={() => setFilter(tab.id)} className={`px-5 py-2 rounded-full text-sm font-bold whitespace-nowrap transition-all border ${filter === tab.id ? 'bg-cyan-600 border-cyan-600 text-white shadow-lg shadow-cyan-500/25' : 'bg-slate-800 border-slate-700 text-slate-400 hover:border-cyan-500/50'}`}>{tab.label}</button>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="px-4 grid grid-cols-1 gap-4 max-w-2xl mx-auto">
+                        {filteredServices.map(s => (
+                            <div key={s.id} onClick={() => setSelected(s)} className={`glass p-4 rounded-2xl flex items-center gap-4 transition-all duration-300 fade-enter active:scale-95 border ${selected?.id === s.id ? 'border-cyan-400 bg-cyan-900/20 ring-1 ring-cyan-400' : 'border-slate-700 hover:border-slate-500'}`}>
+                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl shadow-inner ${selected?.id === s.id ? 'bg-cyan-500 text-white' : 'bg-slate-800 text-cyan-400'}`}><i className={`fas ${s.icon}`}></i></div>
+                                <div className="flex-1">
+                                    <div className="flex justify-between items-center mb-1"><h3 className="font-bold text-white">{s.title}</h3><span className="text-xs font-mono font-bold bg-slate-800 px-2 py-1 rounded text-cyan-300 border border-slate-700">{s.price}</span></div>
+                                    <p className="text-xs text-slate-400 leading-snug">{s.desc}</p>
+                                </div>
+                                {selected?.id === s.id && <i className="fas fa-check-circle text-cyan-400"></i>}
+                            </div>
+                        ))}
+                    </div>
+                    <div className="fixed bottom-0 w-full bg-[#0f172a] border-t border-slate-800 p-4 rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.5)] z-50">
+                        {selected ? (
+                            <div className="max-w-2xl mx-auto animate-pulse-once">
+                                <div className="text-xs text-slate-500 mb-2 flex justify-between"><span>Servicio seleccionado:</span><span className="text-cyan-400 font-bold">{selected.title}</span></div>
+                                <div className="flex gap-2 mb-3">
+                                    <input type="text" placeholder="Tu Nombre" className="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-500" onChange={e => setForm({...form, name: e.target.value})} />
+                                    <input type="text" placeholder="Ciudad" className="w-1/3 bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-cyan-500" onChange={e => setForm({...form, city: e.target.value})} />
+                                </div>
+                                <div className="grid grid-cols-2 gap-3">
+                                    {advisors.map((adv, i) => (
+                                        <button key={i} onClick={() => sendWA(adv.phone)} className="bg-green-600 hover:bg-green-500 py-3 rounded-xl text-white font-bold text-sm flex items-center justify-center gap-2 active:scale-95 transition shadow-lg shadow-green-900/50">
+                                            <i className="fab fa-whatsapp text-lg"></i>
+                                            <div><div className="leading-none">{adv.name.split(' ')[0]}</div><div className="text-[9px] font-normal opacity-80">Asesor</div></div>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="text-center py-2 text-slate-500 text-sm animate-bounce"><i className="fas fa-hand-pointer mr-2"></i> Selecciona un servicio arriba para cotizar</div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
+
+
+  
